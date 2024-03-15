@@ -1,0 +1,11 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.checkboxSelectField({
+  label:         'Sites'|t('linkfield'),
+  instructions:  'Select the available sites.'|t('linkfield'),
+  id:            'sites',
+  name:          'sites',
+  options:       linkType.siteOptions,
+  values:        linkType.sites ?? null,
+  showAllOption: true,
+})}}

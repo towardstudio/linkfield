@@ -1,0 +1,29 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.checkboxSelectField({
+  label:         '{elementName} sources'|t('linkfield', { 'elementName': linkType.displayName }),
+  instructions:  'Select the available sources.'|t('linkfield'),
+  id:            'sources',
+  name:          'sources',
+  options:       linkType.availableSources,
+  values:        sources,
+  showAllOption: true,
+})}}
+
+<fieldset>
+  {{ forms.checkboxField({
+    label:   'Allow users to enter custom queries that will be appended to the url'|t('linkfield'),
+    name:    'allowCustomQuery',
+    id:      'allowCustomQuery',
+    name:    'allowCustomQuery',
+    checked: linkType.allowCustomQuery
+  }) }}
+
+  {{ forms.checkboxField({
+    label:   'Allow links to reference a different site'|t('linkfield'),
+    name:    'allowCrossSiteLink',
+    id:      'allowCrossSiteLink',
+    name:    'allowCrossSiteLink',
+    checked: linkType.allowCrossSiteLink
+  }) }}
+</fieldset>

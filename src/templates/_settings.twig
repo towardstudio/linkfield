@@ -1,0 +1,61 @@
+{% import '_includes/forms' as forms %}
+
+{% do view.registerAssetBundle('towardstudio\\linkfield\\assets\\admin\\LinkFieldAdminAsset') %}
+{% set displayGroup = '' %}
+
+<div class="linkFieldAdmin" id="adminUi">
+  <div class="linkFieldAdmin--tabs">
+    <div class="linkFieldAdmin--tabsRow selected" data-name="_general">
+      <button class="linkFieldAdmin--tabsTab">{{ 'General settings'|t('linkfield') }}</button>
+    </div>
+
+    <div class="linkFieldAdmin--tabsRow all">
+      <div class="linkFieldAdmin--tabsLightswitch">
+        {{- forms.lightswitch({
+          name: 'enableAllLinkTypes',
+          on:   field.enableAllLinkTypes,
+        }) -}}
+      </div>
+      {{ 'Enable all'|t('linkfield') }}
+    </div>
+
+    {%- for linkType in field.availableLinkTypes.sort -%}
+      {%- if linkType.translatedDisplayGroup != displayGroup -%}
+        {%- set displayGroup = linkType.translatedDisplayGroup -%}
+        <div class="linkFieldAdmin--tabsGroup">{{ displayGroup }}</div>
+      {%- endif -%}
+
+      <div class="linkFieldAdmin--tabsRow" data-name="{{ linkType.name }}">
+        <div class="linkFieldAdmin--tabsLightswitch{% if field.enableAllLinkTypes %} hidden{% endif %}">
+          {% namespace 'typeSettings['~linkType.name~']' %}
+            {{- forms.lightswitch({
+              name: 'enabled',
+              on:   linkType.enabled,
+            }) -}}
+          {% endnamespace %}
+        </div>
+
+        <button class="linkFieldAdmin--tabsTab">
+          {{- linkType.displayName -}}
+        </button>
+      </div>
+    {%- endfor -%}
+  </div>
+  <div class="linkFieldAdmin--body">
+    <div class="linkFieldAdmin--bodyContent selected" data-name="_general">
+      {% include 'linkfield/_settings-general' %}
+    </div>
+
+    {%- for linkType in field.availableLinkTypes -%}
+      <div class="linkFieldAdmin--bodyContent" data-name="{{ linkType.name }}">
+        {% namespace 'typeSettings['~linkType.name~']' %}
+          {{- linkType.settingsHtml(field)|raw -}}
+        {% endnamespace %}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% js %}
+  new LinkFieldAdmin("{{ 'adminUi'|namespaceInputId }}");
+{% endjs %}

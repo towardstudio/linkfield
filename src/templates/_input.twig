@@ -1,0 +1,104 @@
+{% import "_includes/forms" as forms %}
+{% import _self as self %}
+
+{% do view.registerAssetBundle('towardstudio\\linkfield\\assets\\field\\LinkFieldAsset') %}
+
+{% set selectedTypeName = field.resolveSelectedLinkTypeName(value) %}
+{% set linkTypes = field.enabledLinkTypes %}
+{% set isEmpty = selectedTypeName == '' or selectedTypeName == 'empty' %}
+
+{# Must be a macro as there is an issue with nested namespace nodes #}
+{% macro typeSettings(linkTypes, selectedTypeName, value, disabled) %}
+  {% for linkType in linkTypes %}
+    {% namespace 'cpForm['~linkType.name~']' %}
+      <div class="linkfield--typeOption {{ linkType.name }}{{ linkType.name == selectedTypeName ? '' : ' hidden' }}">
+        {{ linkType.inputHtml(value, disabled)|raw }}
+      </div>
+    {% endnamespace %}
+  {% endfor %}
+{% endmacro %}
+
+{% namespace name %}
+  <div class="linkfield{% if field.hasSettings %} withSettings{% endif %}" id="{{ name }}">
+    {% if linkTypes|length == 0 %}
+      <p>{{ 'No link types available.'|t('linkfield') }}</p>
+    {% else %}
+      <div class="linkfield--field">
+        {% if field.hasSingleLinkType %}
+          <input type="hidden" id="type" name="type" value="{{ selectedTypeName }}" />
+        {% else %}
+          <div class="linkfield--type">
+            {{ forms.select({
+              id:       'type',
+              name:     'type',
+              disabled: disabled,
+              options:  field.enabledLinkTypes.displayNames,
+              value:    selectedTypeName
+            }) }}
+          </div>
+        {% endif %}
+
+        <div class="linkfield--typeOptions{% if field.hasSingleLinkType %} single{% endif %}">
+          {{ self.typeSettings(linkTypes, selectedTypeName, value, disabled) }}
+        </div>
+
+        {% if field.allowTarget %}
+          <div class="linkfield--target{{ isEmpty ? ' hidden' }}">
+            {{ forms.checkboxField({
+              id:       'target',
+              name:     'target',
+              value:    '_blank',
+              label:    'Open in new window?'|t('linkfield'),
+              checked:  value.target is defined and value.target == '_blank' ? true : null,
+              disabled: disabled,
+            }) }}
+          </div>
+        {% endif %}
+      </div>
+
+      {% if field.hasSettings %}
+        <div class="linkfield--settings{{ isEmpty ? ' hidden' }}">
+          {% if field.allowCustomText %}
+            {{ forms.textField({
+              disabled:    disabled,
+              errors:      value.getErrors('customText'),
+              id:          'customText',
+              label:       'Custom link text'|t('linkfield'),
+              name:        'customText',
+              maxlength:   field.customTextMaxLength > 0 ? field.customTextMaxLength : false,
+              placeholder: field.defaultText == '' ? '' : field.defaultText|t('site'),
+              required:    field.customTextRequired,
+              value:       value.customText is defined and value.customText ? value.customText : '',
+            }) }}
+          {% endif %}
+
+          {% if field.enableAriaLabel %}
+            {{ forms.textField({
+              disabled: disabled,
+              errors:   value.getErrors('ariaLabel'),
+              id:       'ariaLabel',
+              label:    'Aria label'|t('linkfield'),
+              name:     'ariaLabel',
+              value:    value.ariaLabel is defined ? value.ariaLabel : "",
+            }) }}
+          {% endif %}
+
+          {% if field.enableTitle %}
+            {{ forms.textField({
+              disabled: disabled,
+              errors:   value.getErrors('title'),
+              id:       'title',
+              label:    'Title'|t('linkfield'),
+              name:     'title',
+              value:    value.title is defined ? value.title : "",
+            }) }}
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+
+  {% js %}
+    new LinkField("{{ name|namespaceInputId }}");
+  {% endjs %}
+{% endnamespace %}
