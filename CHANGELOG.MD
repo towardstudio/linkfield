@@ -1,5 +1,8 @@
 # Release Notes for Typed Link Field
 
+## 3.0.0 - 2024-04-30
+- Craft 5 Update
+
 ## 2.1.5 - 2022-11-29
 - Fix: Escape SQL query in Migration (see: https://github.com/sebastian-lenz/craft-linkfield/pull/245)
 
