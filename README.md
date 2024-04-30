@@ -1,11 +1,11 @@
-# Link field plugin for Craft
+# Link field plugin for Craft 5
 
 This plugin adds a new link field type to the Craft CMS. The link field allows content editors to choose from
 a list of link types and offers individual input fields for each of them.
 
 ## Requirements
 
-This plugin requires Craft CMS 4.0.0 or later.
+This plugin requires Craft CMS 5 or later.
 
 ## Installation
 

@@ -1,41 +1,43 @@
 {
-  "name": "towardstudio/linkfield",
-  "description": "A Craft field type for selecting links",
-  "type": "craft-plugin",
-  "license": "MIT",
-  "version": "2.1.6",
-  "require": {
-    "php": "^8.0",
-    "craftcms/cms": "^4.0.0"
-  },
-  "require-dev": {
-    "craftcms/feed-me": "^5.0",
-    "craftcms/phpstan": "dev-main",
-    "phpstan/phpstan": "^1.8.5",
-    "phpunit/phpunit": "^7.5 || ^8.0",
-    "verbb/super-table": "^3.0.5"
-  },
-  "autoload": {
-    "classmap": ["legacy"],
-    "psr-4": {
-      "towardstudio\\linkfield\\": "src/"
-    }
-  },
-  "extra": {
-    "handle": "linkfield",
-    "name": "Typed Link Field",
-    "developer": "Toward Studio",
-    "developerUrl": "https://github.com/towardstudio/"
-  },
-  "scripts": {
-    "test": "./vendor/bin/phpunit ./tests",
-    "testWithCoverage": "./vendor/bin/phpunit --coverage-html ./tests/coverage --whitelist ./src  ./tests"
-  },
-  "config": {
-    "allow-plugins": {
-      "yiisoft/yii2-composer": true,
-      "craftcms/plugin-installer": true
-    }
-  },
-  "minimum-stability": "dev"
+	"name": "towardstudio/linkfield",
+	"description": "A Craft field type for selecting links",
+	"type": "craft-plugin",
+	"license": "MIT",
+	"version": "3.0.0",
+	"require": {
+		"php": "^8.0",
+		"craftcms/cms": "^5.0.0"
+	},
+	"require-dev": {
+		"craftcms/feed-me": "^5.0",
+		"craftcms/phpstan": "dev-main",
+		"phpstan/phpstan": "^1.8.5",
+		"phpunit/phpunit": "^7.5 || ^8.0",
+		"verbb/super-table": "^3.0.5"
+	},
+	"autoload": {
+		"classmap": [
+			"legacy"
+		],
+		"psr-4": {
+			"towardstudio\\linkfield\\": "src/"
+		}
+	},
+	"extra": {
+		"handle": "linkfield",
+		"name": "Typed Link Field",
+		"developer": "Toward Studio",
+		"developerUrl": "https://github.com/towardstudio/"
+	},
+	"scripts": {
+		"test": "./vendor/bin/phpunit ./tests",
+		"testWithCoverage": "./vendor/bin/phpunit --coverage-html ./tests/coverage --whitelist ./src  ./tests"
+	},
+	"config": {
+		"allow-plugins": {
+			"yiisoft/yii2-composer": true,
+			"craftcms/plugin-installer": true
+		}
+	},
+	"minimum-stability": "dev"
 }
