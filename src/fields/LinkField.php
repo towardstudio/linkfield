@@ -92,6 +92,93 @@ class LinkField extends ForeignField
   private ?array $_linkTypeSettings = null;
 
 
+  // Static methods
+  // --------------
+
+  /**
+   * @return string
+   */
+    static public function displayName(): string {
+        return self::t('Link field');
+    }
+
+    /**
+    * @inheritdoc
+    */
+    public static function icon(): string
+    {
+        return 'link';
+    }
+
+  /**
+   * @inheritDoc
+   */
+  public static function inputTemplate(): string {
+    return 'linkfield/_input';
+  }
+
+  /**
+   * @inheritDoc
+   */
+  public static function modelClass(): string {
+    return Link::class;
+  }
+
+  /**
+   * @inheritDoc
+   */
+  public static function queryExtensionClass(): string {
+    return LinkFieldQueryExtension::class;
+  }
+
+  /**
+   * @inheritDoc
+   */
+  public static function recordClass(): string {
+    return LinkRecord::class;
+  }
+
+  /**
+   * @inheritDoc
+   */
+  public static function recordModelAttributes(): array {
+    return [
+      'linkedId',
+      'linkedSiteId',
+      'linkedTitle',
+      'linkedUrl' ,
+      'payload',
+      'type',
+    ];
+  }
+
+  /**
+   * @inheritDoc
+   */
+  public static function settingsTemplate(): ?string {
+    return 'linkfield/_settings';
+  }
+
+  /**
+   * @inheritDoc
+   */
+  public static function supportedTranslationMethods(): array {
+    return [
+      self::TRANSLATION_METHOD_NONE,
+      self::TRANSLATION_METHOD_SITE,
+      self::TRANSLATION_METHOD_SITE_GROUP,
+      self::TRANSLATION_METHOD_LANGUAGE,
+      self::TRANSLATION_METHOD_CUSTOM,
+    ];
+  }
+
+  /**
+   * @inheritDoc
+   */
+  public static function t(string $message): string {
+    return Craft::t('linkfield', $message);
+  }
+
   /**
    * @param bool $isNew
    * @throws Exception
@@ -337,83 +424,4 @@ class LinkField extends ForeignField
     );
   }
 
-
-  // Static methods
-  // --------------
-
-  /**
-   * @return string
-   */
-  static public function displayName(): string {
-    return self::t('Link field');
-  }
-
-  /**
-   * @inheritDoc
-   */
-  public static function inputTemplate(): string {
-    return 'linkfield/_input';
-  }
-
-  /**
-   * @inheritDoc
-   */
-  public static function modelClass(): string {
-    return Link::class;
-  }
-
-  /**
-   * @inheritDoc
-   */
-  public static function queryExtensionClass(): string {
-    return LinkFieldQueryExtension::class;
-  }
-
-  /**
-   * @inheritDoc
-   */
-  public static function recordClass(): string {
-    return LinkRecord::class;
-  }
-
-  /**
-   * @inheritDoc
-   */
-  public static function recordModelAttributes(): array {
-    return [
-      'linkedId',
-      'linkedSiteId',
-      'linkedTitle',
-      'linkedUrl' ,
-      'payload',
-      'type',
-    ];
-  }
-
-  /**
-   * @inheritDoc
-   */
-  public static function settingsTemplate(): ?string {
-    return 'linkfield/_settings';
-  }
-
-  /**
-   * @inheritDoc
-   */
-  public static function supportedTranslationMethods(): array {
-    return [
-      self::TRANSLATION_METHOD_NONE,
-      self::TRANSLATION_METHOD_SITE,
-      self::TRANSLATION_METHOD_SITE_GROUP,
-      self::TRANSLATION_METHOD_LANGUAGE,
-      self::TRANSLATION_METHOD_CUSTOM,
-    ];
-  }
-
-  /**
-   * @inheritDoc
-   */
-  public static function t(string $message): string {
-    return Craft::t('linkfield', $message);
-  }
 }
