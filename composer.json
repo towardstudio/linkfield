@@ -3,7 +3,7 @@
   "description": "A Craft field type for selecting links",
   "type": "craft-plugin",
   "license": "MIT",
-  "version": "2.1.6",
+  "version": "2.2.0",
   "require": {
     "php": "^8.0",
     "craftcms/cms": "^4.0.0"
@@ -16,7 +16,9 @@
     "verbb/super-table": "^3.0.5"
   },
   "autoload": {
-    "classmap": ["legacy"],
+    "classmap": [
+      "legacy"
+    ],
     "psr-4": {
       "towardstudio\\linkfield\\": "src/"
     }
